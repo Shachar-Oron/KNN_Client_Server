@@ -33,13 +33,13 @@ After you have download the files you want to train the KNN algorithm with:
  * run   ```make ```
  * run  ```server.out file port```
  * run  ```client.out ip port```
- * enter a vector in the form of "vector distance k" 
+ * enter an input in the form of "vector distance k" 
  * to stop enter ```-1```  
 
 
 ### New optimisations in the code:
-- A load data class that reads the inputs value with the inserted path
-- A Knn class that uses the Distances Calcolators class to find the common label of the input's nearest neighbors.
+- A CLient class 
+- A Server that uses the KNN algorithm class to find the common label of the input's nearest neighbors. Finally the server class sends the label to the client.
 
-### A disclaimer:
+
 
