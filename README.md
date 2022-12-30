@@ -21,25 +21,21 @@ In the previous exercise, we have created a class named DistancesCalcolators tha
    ## About the algorithm:
    The server and the client works due to TCP protocol.
    - The client is running in an endless loop, gets inputs from the user ann dents them to the server.
-   - The server
-   There are different ways to implement the KNN algorithm. in our code we make the next steps:
-   - find the K nearest neighbors of the input by the Distances Calcolators functions.
-   - find the common label of the input's neighbors.
-   - now we know the common label, we will classify the input by this common lable.
-    At first, the user will load a classified data set as an input and the algorithm will Calcolates the results of the K nearest neighbors.
-    Then, the user will input a vector of features (in a forrm of numbers with spaces) and the output eould be the label of the input's vector.
-    The lable is provide according to the k, file and distance the user has inserted.
-
+   - The server recives the input and clissified it accordenly to the demands via the KNN algorithm.
+   The client gets inputs until the user enters '-1'. Then the endless loop of the clients breaks and the socket is closed.
+   Meanwhile, the server is running in double endless loops,  the inner one gets the masseges from the client while the outer one opens the socket. When the user stops    the progrem the inner loop breaks and the outer loop never breaks. In that way the server never get closed and waits to the next connection with a client. 
  
  ## Getting Started
 ### Running  the app :
-After you have download the attached files
+After you have download the files you want to train the KNN algorithm with:
 
  * open the terminal
  * run   ```make ```
  * run  ```server.out file port```
  * run  ```client.out ip port```
  * enter a vector in the form of "vector distance k" 
+ * to stop enter ```-1```  
+
 
 ### New optimisations in the code:
 - A load data class that reads the inputs value with the inserted path
