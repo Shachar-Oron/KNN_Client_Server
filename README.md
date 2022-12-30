@@ -19,6 +19,9 @@ In the previous exercise, we have created a class named DistancesCalcolators tha
   - Minkowski distance with const p = 2 (MIN)
   
    ## About the algorithm:
+   The server and the client works due to TCP protocol.
+   - The client is running in an endless loop, gets inputs from the user ann dents them to the server.
+   - The server
    There are different ways to implement the KNN algorithm. in our code we make the next steps:
    - find the K nearest neighbors of the input by the Distances Calcolators functions.
    - find the common label of the input's neighbors.
