@@ -31,8 +31,8 @@ After you have download the files you want to train the KNN algorithm with:
 
  * open the terminal
  * run   ```make ```
- * run  ```server.out file port```
- * run  ```client.out ip port```
+ * run  ```./server.out file port &```
+ * run  ```./client.out ip port```
  * enter an input in the form of "vector distance k" 
  * to stop enter ```-1```  
 
