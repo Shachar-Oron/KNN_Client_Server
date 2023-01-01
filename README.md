@@ -1,6 +1,6 @@
 # ap_ex3
 ## Description
-project of the second exercise in ap course, implementation of the KNN learning machine algorithm.
+project of the third exercise in ap course, implementation of client and server functionallity.
 
  ## About the project
 In this project we have implemented the previous exercises by adding them the server and the client functionallity. The client communicates with the server through the socket, with an IP adress and a port.
