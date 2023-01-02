@@ -11,14 +11,11 @@
 #include <string.h>
 using namespace std;
 
-
-
 int main(int argc, char** argv) {
-    //TODO: arg[1] is ip
-    //TODO: arg[2] is port_no
 
-    const char* ip_address = "127.0.0.1";
-    const int port_no = 5555;
+    const char* ip_address = argv[1];
+    const int port_no = atoi(argv[2]);
+
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {
         perror("error creating socket");
@@ -34,28 +31,30 @@ int main(int argc, char** argv) {
     cout << "client connected to server\n";
 
     while (true) {
-        // TODO: getline instead of char* and then convert back to char*
-        char data_addr[256];
+        string input_data;
         // the vector metrics and k
-        cin >> data_addr;
-        int data_len = strlen(data_addr);
-        if (strcmp(data_addr,"-1") == 0) {
+        getline(cin, input_data);
+
+        int data_len = input_data.size();
+        if (input_data == "-1") {
             break;
         }
-        //TODO: work with string instead of char*
-        // make sure the input is a number and other validations
         //TODO: transit everything into numbers, also the metrics
+
+        char const *char_arr = input_data.data();
         //int data_len = vec.size() * sizeof(double);
         //double* arr = vec.data();
         //char* buffer1 = reinterpret_cast<char*>(arr);
         // data_addr must be char*
-        int sent_bytes = send(sock, data_addr, data_len, 0);
+        int sent_bytes = send(sock, char_arr, data_len, 0);
+
         if (sent_bytes < 0) {
             // error
         }
 
         char buffer[4096];
         int expected_data_len = sizeof(buffer);
+
         int read_bytes = recv(sock, buffer, expected_data_len, 0);
 
         if (read_bytes == 0) {
@@ -63,10 +62,9 @@ int main(int argc, char** argv) {
         } else if (read_bytes < 0) {
             // error
         } else {
-            cout << buffer << endl;
+            cout << "***" << buffer << endl;
         }
     }
-
     close(sock);
     return 0;
 }

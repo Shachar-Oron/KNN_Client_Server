@@ -12,9 +12,12 @@ using namespace std;
 
 class Helpers {
 public:
-    static vector<float> SplitStringToVector(string inputString1);
+    static vector<float> ConvertToFloatVector(vector<string> inputString1);
+    static vector<string> SplitStringToStringVector(string inputString1);
     bool InputValidation(string inputString1, string inputString2);
     void PrintFloat(float num);
+    static bool is_valid_CalculatorName(string CalculatorName);
+    static bool is_valid_k(string line);
 
 private:
     bool _allIsNumbers(string inputString);

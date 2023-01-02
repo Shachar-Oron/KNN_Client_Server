@@ -36,10 +36,10 @@ bool is_number(const std::string& s)
  * @return none
  */
 void LoadData::read_file(const char* path) {
+    cout<< "path: " << path << endl;
 
-    std::ifstream my_file (path);
+    ifstream my_file (path);
     string my_line;
-
     // check whether the file is open
     if (my_file.is_open()) {
         while(getline(my_file, my_line)) {

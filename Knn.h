@@ -17,9 +17,9 @@ class Knn {
 
 public:
     Knn();
-    Knn(int k, string calculator);
+    Knn(string k, string calculator);
 
     list<int> kMaxest(list<int> distances);
-    string RunKnn(vector<StructHeader :: Sample> classifiedVectors);
+    string RunKnn(vector<StructHeader :: Sample> classifiedVectors, vector<string> inputVec);
 };
 #endif //AP_EX1_2_KNN_H
