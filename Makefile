@@ -1,11 +1,18 @@
-a.out: main.o DistancesCalcolators.o Knn.o Helpers.o LoadData.o StructHeader.o
+#a.out: main.o DistancesCalcolators.o Knn.o Helpers.o LoadData.o StructHeader.o Client.o Server.o
+#	g++ ./*.o -o a.out
+a.out:  DistancesCalcolators.o Knn.o Helpers.o LoadData.o StructHeader.o Client.o Server.o
 	g++ ./*.o -o a.out
+#main.o: main.cpp
+#	g++ -std=c++11 -c main.cpp
 
-main.o: main.cpp
-	g++ -std=c++11 -c main.cpp
+Client.o: Client.cpp Client.h
+	g++ -std=c++11 -c Client.cpp
 
-DistancesCalcolators.o: DistancesCalcolators.cpp DistancesCalcolators.h
-	g++ -std=c++11 -c DistancesCalcolators.cpp
+Client.o: Client.cpp Client.h
+	g++ -std=c++11 -c Client.cpp
+
+Server.o: Server.cpp Server.h
+	g++ -std=c++11 -c Server.cpp
 
 Knn.o: Knn.cpp Knn.h
 	g++ -std=c++11 -c Knn.cpp

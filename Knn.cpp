@@ -22,8 +22,17 @@ string calculator;
  * @param input_k the number of neighbors.
  * @param input_calculator the alias of the chosen calculator.
  */
-Knn::Knn(int input_k, string input_calculator) {
-    k = input_k;
+Knn::Knn(string input_k, string input_calculator) {
+    if (Helpers :: is_valid_k(input_k) == false) {
+//        TODO: return an error to client
+        throw ("invalid input.");
+    }
+    k = stoi(input_k);
+
+    if (Helpers :: is_valid_CalculatorName(input_calculator) == false) {
+        //        TODO: return an error to client
+        throw("invalid input.");
+    }
     calculator = input_calculator;
 }
 
@@ -34,7 +43,8 @@ Knn::Knn(int input_k, string input_calculator) {
  *
  * @return the label of input vector.
  */
-string Knn:: RunKnn(vector<StructHeader :: Sample> classifiedVectors) {
+//string Knn:: RunKnn(vector<StructHeader :: Sample> classifiedVectors) {
+string Knn:: RunKnn(vector<StructHeader :: Sample> classifiedVectors, vector<string> inputVec) {
     int kNearestDistances[k];
     int i = 0;
     while(i < k) {
@@ -43,10 +53,7 @@ string Knn:: RunKnn(vector<StructHeader :: Sample> classifiedVectors) {
     }
     StructHeader :: Sample kNearestNeighbor[k];
 
-    string inputVec;
-    getline(cin, inputVec);
-
-    vector<float> unclassifiedVec = Helpers :: SplitStringToVector(inputVec);
+    vector<float> unclassifiedVec = Helpers :: ConvertToFloatVector(inputVec);
 
     for (StructHeader :: Sample classifiedVec : classifiedVectors) {
 

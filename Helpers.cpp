@@ -16,15 +16,36 @@ using namespace std;
  *
  * @return a float vector with the string's values.
  */
-vector<float> Helpers ::  SplitStringToVector(string inputString) {
+vector<float> Helpers ::  ConvertToFloatVector(vector<string> inputString) {
 
     vector<float> vec;
+    for (string item : inputString) {
+        try {
+            vec.push_back (stof(item));
+        }
+        catch (...){
+            throw;
+        }
+    }
+    return vec;
+}
+
+/**
+ * Split a string to vector by a single space
+ *
+ * @param inputString is the string for splitting.
+ *
+ * @return a vector with the string's values.
+ */
+vector<string> Helpers ::  SplitStringToStringVector(string inputString) {
+
+    vector<string> vec;
     char delim = ' ';
     stringstream ss (inputString);
     string item;
 
     while (getline (ss, item, delim)) {
-        vec.push_back (stof(item));
+        vec.push_back (item);
     }
     return vec;
 }
@@ -61,6 +82,26 @@ void Helpers ::  PrintFloat(float num) {
     else {
         cout.precision(16);
         cout << fixed << num << endl;
+    }
+}
+
+bool Helpers :: is_valid_k(string line)
+{
+    char* p;
+    strtol(line.c_str(), &p, 10);
+    return *p == 0;
+}
+
+bool Helpers :: is_valid_CalculatorName(string CalculatorName) {
+    if ((CalculatorName == "CAN")
+        or (CalculatorName == "CHB")
+        or (CalculatorName == "MAN")
+        or (CalculatorName == "AUC")
+        or (CalculatorName == "MIN")) {
+        return true;
+    }
+    else {
+        return false;
     }
 }
 
