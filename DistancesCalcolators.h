@@ -2,6 +2,8 @@
 // Created by liel8 on 23/11/2022.
 //
 #include <vector>
+#include <string>
+
 
 using namespace std;
 

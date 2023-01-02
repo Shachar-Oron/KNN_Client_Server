@@ -21,11 +21,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="22c9a6c9-04a5-4d3f-8f10-3c7b951240f1" name="Changes" comment="project">
-      <change afterPath="$PROJECT_DIR$/Client.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_14_12_2022_22_06__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_14_12_2022_22_06__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DistancesCalcolators.h" beforeDir="false" afterPath="$PROJECT_DIR$/DistancesCalcolators.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +34,15 @@
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="1-rearrange-the-code-for-ex3" />
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="1-rearrange-the-code-for-ex3" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -117,6 +123,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="creation of client and server classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="creation of client and server classes" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
