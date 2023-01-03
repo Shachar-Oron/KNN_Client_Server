@@ -19,13 +19,15 @@ using namespace std;
 
 //get csv_file & port in args
 int main(int argc, char *argv[]) {
-    cout << "in server, the massage from the client.\n";
     const char *filePath = argv[1];
     const int server_port = atoi(argv[2]);
+
+    //       validate the args:
     if (Helpers::is_valid_path(argv[1]) && Helpers::is_valid_port(argv[2])) {
         LoadData data_set;
         data_set.read_file(filePath);
 
+        //      create the socket
         int sock = socket(AF_INET, SOCK_STREAM, 0);
         if (sock < 0) {
             perror("error creating socket");
@@ -35,12 +37,14 @@ int main(int argc, char *argv[]) {
         sin.sin_family = AF_INET;
         sin.sin_addr.s_addr = INADDR_ANY;
         sin.sin_port = htons(server_port);
+        //        binding:
         if (bind(sock, (struct sockaddr *) &sin, sizeof(sin)) < 0) {
             perror("error binding socket");
         }
         if (listen(sock, 5) < 0) {
             perror("error listening to a socket");
         }
+        //       keeps server always running
         while (true) {
             struct sockaddr_in client_sin;
             unsigned int addr_len = sizeof(client_sin);
@@ -49,9 +53,11 @@ int main(int argc, char *argv[]) {
             if (client_sock < 0) {
                 perror("error accepting client");
             }
+            //      keeps the connection with specific client open until client closing
             while (true) {
                 char buffer[4096];
                 int expected_data_len = sizeof(buffer);
+                //       receive the data from the client into buffer
                 int read_bytes = recv(client_sock, buffer, expected_data_len, 0);
                 string result;
                 if (read_bytes == 0) {
@@ -62,6 +68,7 @@ int main(int argc, char *argv[]) {
                     // error
                     cout << ("error accepting client") << endl;
                 } else {
+                    //       split the data and run knn:
                     vector<string> splited = Helpers::SplitStringToStringVector(buffer);
 
                     vector<string> input_vec;
@@ -72,29 +79,27 @@ int main(int argc, char *argv[]) {
 
                     Knn obj = Knn(stringK, calc_input);
                     Helpers help;
+                    //       validate the input from the user (what we cannot check in client):
+
                     // make sure the vector is in the correct length
                     bool vaildVectorLength = help.InputValidation(
                             help._convertToStringFromFloat(data_set.getSampVec()[0].vec),
                             help._convertToString(input_vec));
-                    bool vaild_calc_metric = help.is_valid_CalculatorName(calc_input);
-                    // make sure k is int
-                    bool valid_k = help.is_valid_k(stringK);
+
                     // make sure that k is'nt bigger than the number of lines in the file
                     bool valid_k_length = help.IsKTooLarge(filePath, stoi(stringK));
 
-                    //                if (!vaildVectorLength or !vaild_calc_metric or !valid_k or valid_k_length) {
-                    if (!vaildVectorLength) {
+                    if (!vaildVectorLength or valid_k_length) {
                         result = "invalid input";
                     } else { // success
                         result = obj.RunKnn(data_set.getSampVec(), input_vec);
                     }
+                    //      send to the client the result
                     int sent_bytes = send(client_sock, result.c_str(), read_bytes, 0);
                     if (sent_bytes < 0) {
                         cout << ("error sending to client") << endl;
 
                     }
-
-
                 }
             }
         }
