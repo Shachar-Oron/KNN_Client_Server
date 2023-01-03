@@ -34,7 +34,6 @@ Knn::Knn(string input_k, string input_calculator) {
  *
  * @return the label of input vector.
  */
-//string Knn:: RunKnn(vector<StructHeader :: Sample> classifiedVectors) {
 string Knn:: RunKnn(vector<StructHeader :: Sample> classifiedVectors, vector<string> inputVec) {
     int kNearestDistances[k];
     int i = 0;
