@@ -21,6 +21,7 @@ public:
     static bool is_valid_ip(string input_ip);
     static bool is_valid_port(string input_port);
     static bool is_float_vec(vector<string> input_vec);
+    static bool is_valid_path(string input_path);
     static bool _isNumbers(string inputString);
     static bool _isInteger(string inputString);
     static vector<int> _splitIpToIntVector(string inputIp);

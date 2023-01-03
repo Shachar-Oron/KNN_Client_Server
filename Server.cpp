@@ -21,86 +21,88 @@ using namespace std;
 int main(int argc, char *argv[]) {
     cout << "in server, the massage from the client.\n";
     const char *filePath = argv[1];
-    LoadData data_set;
-    data_set.read_file(filePath);
-
     const int server_port = atoi(argv[2]);
-//    const int server_port = 5555;
+    if (Helpers::is_valid_path(argv[1]) && Helpers::is_valid_port(argv[2])) {
+        LoadData data_set;
+        data_set.read_file(filePath);
 
-    int sock = socket(AF_INET, SOCK_STREAM, 0);
-    if (sock < 0) {
-        perror("error creating socket");
-    }
-    struct sockaddr_in sin;
-    memset(&sin, 0, sizeof(sin));
-    sin.sin_family = AF_INET;
-    sin.sin_addr.s_addr = INADDR_ANY;
-    sin.sin_port = htons(server_port);
-    if (bind(sock, (struct sockaddr *) &sin, sizeof(sin)) < 0) {
-        perror("error binding socket");
-    }
-    if (listen(sock, 5) < 0) {
-        perror("error listening to a socket");
-    }
-    while (true) {
-        struct sockaddr_in client_sin;
-        unsigned int addr_len = sizeof(client_sin);
-        //new client
-        int client_sock = accept(sock, (struct sockaddr *) &client_sin, &addr_len);
-        if (client_sock < 0) {
-            perror("error accepting client");
+        int sock = socket(AF_INET, SOCK_STREAM, 0);
+        if (sock < 0) {
+            perror("error creating socket");
+        }
+        struct sockaddr_in sin;
+        memset(&sin, 0, sizeof(sin));
+        sin.sin_family = AF_INET;
+        sin.sin_addr.s_addr = INADDR_ANY;
+        sin.sin_port = htons(server_port);
+        if (bind(sock, (struct sockaddr *) &sin, sizeof(sin)) < 0) {
+            perror("error binding socket");
+        }
+        if (listen(sock, 5) < 0) {
+            perror("error listening to a socket");
         }
         while (true) {
-            char buffer[4096];
-            int expected_data_len = sizeof(buffer);
-            int read_bytes = recv(client_sock, buffer, expected_data_len, 0);
-            string result;
-            if (read_bytes == 0) {
-                // connection is closed
-                close(client_sock);
-                break;
-            } else if (read_bytes < 0) {
-                // error
-                cout << ("error accepting client") << endl;
-            } else {
-                vector<string> splited = Helpers::SplitStringToStringVector(buffer);
+            struct sockaddr_in client_sin;
+            unsigned int addr_len = sizeof(client_sin);
+            //new client
+            int client_sock = accept(sock, (struct sockaddr *) &client_sin, &addr_len);
+            if (client_sock < 0) {
+                perror("error accepting client");
+            }
+            while (true) {
+                char buffer[4096];
+                int expected_data_len = sizeof(buffer);
+                int read_bytes = recv(client_sock, buffer, expected_data_len, 0);
+                string result;
+                if (read_bytes == 0) {
+                    // connection is closed
+                    close(client_sock);
+                    break;
+                } else if (read_bytes < 0) {
+                    // error
+                    cout << ("error accepting client") << endl;
+                } else {
+                    vector<string> splited = Helpers::SplitStringToStringVector(buffer);
 
-                vector<string> input_vec;
-                input_vec.assign(splited.begin(), splited.end() - 2);
-                int n = splited.size();
-                string calc_input = splited[n - 2];
-                string stringK = splited[n - 1];
+                    vector<string> input_vec;
+                    input_vec.assign(splited.begin(), splited.end() - 2);
+                    int n = splited.size();
+                    string calc_input = splited[n - 2];
+                    string stringK = splited[n - 1];
 
-                Knn obj = Knn(stringK, calc_input);
-                Helpers help;
-                // make sure the vector is in the correct length
-                bool vaildVectorLength = help.InputValidation(help._convertToStringFromFloat(data_set.getSampVec()[0].vec),
-                                                               help._convertToString(input_vec));
-                bool vaild_calc_metric = help.is_valid_CalculatorName(calc_input);
-                // make sure k is int
-                bool valid_k = help.is_valid_k(stringK);
-                // make sure that k is'nt bigger than the number of lines in the file
-                bool valid_k_length = help.IsKTooLarge(filePath, stoi(stringK));
+                    Knn obj = Knn(stringK, calc_input);
+                    Helpers help;
+                    // make sure the vector is in the correct length
+                    bool vaildVectorLength = help.InputValidation(
+                            help._convertToStringFromFloat(data_set.getSampVec()[0].vec),
+                            help._convertToString(input_vec));
+                    bool vaild_calc_metric = help.is_valid_CalculatorName(calc_input);
+                    // make sure k is int
+                    bool valid_k = help.is_valid_k(stringK);
+                    // make sure that k is'nt bigger than the number of lines in the file
+                    bool valid_k_length = help.IsKTooLarge(filePath, stoi(stringK));
 
-//                if (!vaildVectorLength or !vaild_calc_metric or !valid_k or valid_k_length) {
-                if (!vaildVectorLength) {
-                    result = "invalid input";
+                    //                if (!vaildVectorLength or !vaild_calc_metric or !valid_k or valid_k_length) {
+                    if (!vaildVectorLength) {
+                        result = "invalid input";
+                    } else { // success
+                        result = obj.RunKnn(data_set.getSampVec(), input_vec);
+                    }
+                    int sent_bytes = send(client_sock, result.c_str(), read_bytes, 0);
+                    if (sent_bytes < 0) {
+                        cout << ("error sending to client") << endl;
+
+                    }
+
+
                 }
-                else { // success
-                    result = obj.RunKnn(data_set.getSampVec(), input_vec);
-                }
-                int sent_bytes = send(client_sock, result.c_str(), read_bytes, 0);
-                if (sent_bytes < 0) {
-                    cout << ("error sending to client") << endl;
-
-                }
-
-
             }
         }
-    }
 
         close(sock);
-        return 0;
-
+    }
+    else {
+        cout << "invalid arguments" << endl;
+    }
+    return 0;
 }

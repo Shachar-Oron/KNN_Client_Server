@@ -173,6 +173,21 @@ bool Helpers :: is_float_vec(vector<string> input_vec) {
 }
 
 /**
+ * check if the path is exit.
+ *
+ * @param input_path the path for checking.
+
+ * @return true if the path is exit, else false.
+ */
+bool Helpers :: is_valid_path(string input_path) {
+    ifstream my_file (input_path);
+    // check whether the file is open
+    if (my_file.is_open())
+        return true;
+    return false;
+}
+
+/**
  * a private method for validation that check if all the values in a string are numbers.
  *
  * @param inputString the string for checking.
@@ -214,6 +229,7 @@ bool Helpers :: _isNumbers(string inputString) {
     }
     return true;
 }
+
 
 /**
  * a private method for validation that check if the string is a integer.
