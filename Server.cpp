@@ -82,8 +82,9 @@ int main(int argc, char *argv[]) {
                 // make sure that k is'nt bigger than the number of lines in the file
                 bool valid_k_length = help.IsKTooLarge(filePath, stoi(stringK));
 
-                if (!vaildVectorLength or !vaild_calc_metric or !valid_k or valid_k_length) {
-                    result = "input invalid";
+//                if (!vaildVectorLength or !vaild_calc_metric or !valid_k or valid_k_length) {
+                if (!vaildVectorLength) {
+                    result = "invalid input";
                 }
                 else { // success
                     result = obj.RunKnn(data_set.getSampVec(), input_vec);

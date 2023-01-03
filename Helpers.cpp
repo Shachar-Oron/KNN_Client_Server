@@ -4,6 +4,7 @@
 #include <vector>
 #include <sstream>
 #include <string>
+#include <fstream>
 
 #include "Helpers.h"
 
@@ -178,7 +179,7 @@ bool Helpers :: is_float_vec(vector<string> input_vec) {
 
  * @return true if the string is contains only number, else false.
  */
-bool Helpers ::_isNumbers(string inputString) {
+bool Helpers :: _isNumbers(string inputString) {
 
     while (inputString != "") {
         string substr;
@@ -221,7 +222,7 @@ bool Helpers ::_isNumbers(string inputString) {
 
  * @return true if the string is a integer, else false.
  */
-bool Helpers ::_isInteger(string inputString) {
+bool Helpers :: _isInteger(string inputString) {
     for ( char i : inputString) {
         if (!isdigit(i)) {
             return false;
