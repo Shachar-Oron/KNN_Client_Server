@@ -12,6 +12,7 @@
 using namespace std;
 
 int main(int argc, char** argv) {
+    //TODO: validation of ip and port
 
     const char* ip_address = argv[1];
     const int port_no = atoi(argv[2]);
@@ -32,19 +33,14 @@ int main(int argc, char** argv) {
 
     while (true) {
         string input_data;
-        // the vector metrics and k
+        // the vector, metrics and k
         getline(cin, input_data);
 
         int data_len = input_data.size();
         if (input_data == "-1") {
             break;
         }
-        //TODO: transit everything into numbers, also the metrics
-
         char const *char_arr = input_data.data();
-        //int data_len = vec.size() * sizeof(double);
-        //double* arr = vec.data();
-        //char* buffer1 = reinterpret_cast<char*>(arr);
         // data_addr must be char*
         int sent_bytes = send(sock, char_arr, data_len, 0);
 
@@ -58,11 +54,11 @@ int main(int argc, char** argv) {
         int read_bytes = recv(sock, buffer, expected_data_len, 0);
 
         if (read_bytes == 0) {
-            // connection is closed
+//             connection is closed
         } else if (read_bytes < 0) {
             // error
         } else {
-            cout << "***" << buffer << endl;
+            cout << buffer << endl;
         }
     }
     close(sock);

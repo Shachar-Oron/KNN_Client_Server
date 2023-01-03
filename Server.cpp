@@ -17,16 +17,15 @@
 
 using namespace std;
 
-//get csv_file, port in args
+//get csv_file & port in args
 int main(int argc, char *argv[]) {
     cout << "in server, the massage from the client.\n";
-    const char* filePath = argv[1];
-    cout << "filePath: " << filePath << endl;
+    const char *filePath = argv[1];
     LoadData data_set;
     data_set.read_file(filePath);
 
-//    const int server_port = atoi(argv[2]);
-    const int server_port = 5555;
+    const int server_port = atoi(argv[2]);
+//    const int server_port = 5555;
 
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {
@@ -60,12 +59,10 @@ int main(int argc, char *argv[]) {
                 // connection is closed
                 close(client_sock);
                 break;
-            }
-            else if (read_bytes < 0) {
-                // error TODO: print a message and break
-            }
-
-            else {
+            } else if (read_bytes < 0) {
+                // error
+                cout << ("error accepting client") << endl;
+            } else {
                 vector<string> splited = Helpers::SplitStringToStringVector(buffer);
 
                 vector<string> input_vec;
@@ -75,15 +72,34 @@ int main(int argc, char *argv[]) {
                 string stringK = splited[n - 1];
 
                 Knn obj = Knn(stringK, calc_input);
-                result = obj.RunKnn(data_set.getSampVec(), input_vec);
-            }
-            int sent_bytes = send(client_sock, result.c_str(), read_bytes, 0);
-            if (sent_bytes < 0) {
-                cout << ("error sending to client") << endl;
+                Helpers help;
+                // make sure the vector is in the correct length
+                bool vaildVectorLength = help.InputValidation(help._convertToStringFromFloat(data_set.getSampVec()[0].vec),
+                                                               help._convertToString(input_vec));
+                bool vaild_calc_metric = help.is_valid_CalculatorName(calc_input);
+                // make sure k is int
+                bool valid_k = help.is_valid_k(stringK);
+                // make sure that k is'nt bigger than the number of lines in the file
+                bool valid_k_length = help.IsKTooLarge(filePath, stoi(stringK));
+
+                if (!vaildVectorLength or !vaild_calc_metric or !valid_k or valid_k_length) {
+                    result = "input invalid";
+                }
+                else { // success
+                    result = obj.RunKnn(data_set.getSampVec(), input_vec);
+                }
+                int sent_bytes = send(client_sock, result.c_str(), read_bytes, 0);
+                if (sent_bytes < 0) {
+                    cout << ("error sending to client") << endl;
+
+                }
+
+
             }
         }
     }
 
-    close(sock);
-    return 0;
+        close(sock);
+        return 0;
+
 }

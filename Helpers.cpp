@@ -4,6 +4,7 @@
 #include <vector>
 #include <sstream>
 #include <string>
+#include <fstream>
 
 #include "Helpers.h"
 
@@ -20,12 +21,12 @@ vector<float> Helpers ::  ConvertToFloatVector(vector<string> inputString) {
 
     vector<float> vec;
     for (string item : inputString) {
-        try {
-            vec.push_back (stof(item));
-        }
-        catch (...){
-            throw;
-        }
+//        try {
+        vec.push_back (stof(item));
+//        }
+//        catch (...){
+//            throw;
+//        }
     }
     return vec;
 }
@@ -64,8 +65,10 @@ bool Helpers ::  InputValidation(string inputString1, string inputString2) {
     if (_allIsNumbers(inputString1) && _allIsNumbers(inputString2)
         && (_numOfSpc(inputString1) == _numOfSpc(inputString2)))
         return true;
-
-    return false;
+    else {
+//        cout <<"correct length of the vector should be: " << _numOfSpc(inputString1)<< endl;
+        return false;
+    }
 }
 
 /**
@@ -162,4 +165,65 @@ int Helpers ::_numOfSpc(string inputString) {
         }
     }
     return numOfSpace;
+}
+
+/**
+ * a method for converting a vector of strings into a single string with spaces in between each element.
+ *
+ * @param words the vector of strings.
+
+ * @return the string.
+ */
+string Helpers ::_convertToString(vector<string> words ) {
+    string result;
+
+    // Iterate through the vector and concatenate each element to the result, separated by spaces
+    for (int i = 0; i < words.size(); i++) {
+        result += words[i] + " ";
+    }
+    return result;
+}
+
+/**
+ * a method for converting a vector of floats into a single string with spaces in between each element.
+ *
+ * @param numbers the vector of floats.
+
+ * @return the string.
+ */
+string Helpers ::_convertToStringFromFloat(vector<float> numbers ) {
+
+    stringstream result;
+
+    // Iterate through the vector and concatenate each element to the result, separated by spaces
+    for (int i = 0; i < numbers.size(); i++) {
+        result << numbers[i] << " ";
+    }
+
+    // Convert the stringstream to a string
+    string result_str = result.str();
+
+    return result_str;
+}
+
+/**
+ * a method that checks if k is bigger than the number of lines in a csv file.
+ *
+ * @param file_path is the path to the file.
+ * @param k is k.
+ * @return return true if k is greater than the number of lines, false otherwise.
+ */
+bool Helpers ::IsKTooLarge(const std::string& file_path, int k) {
+    // open the file
+    std::ifstream file(file_path);
+
+    // count the number of lines in the file
+    int line_count = 0;
+    std::string line;
+    while (std::getline(file, line)) {
+        line_count++;
+    }
+
+    // return true if k is greater than the number of lines, false otherwise
+    return k > line_count;
 }

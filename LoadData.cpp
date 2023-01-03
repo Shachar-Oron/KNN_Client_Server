@@ -36,7 +36,6 @@ bool is_number(const std::string& s)
  * @return none
  */
 void LoadData::read_file(const char* path) {
-    cout<< "path: " << path << endl;
 
     ifstream my_file (path);
     string my_line;

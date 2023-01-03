@@ -23,16 +23,7 @@ string calculator;
  * @param input_calculator the alias of the chosen calculator.
  */
 Knn::Knn(string input_k, string input_calculator) {
-    if (Helpers :: is_valid_k(input_k) == false) {
-//        TODO: return an error to client
-        throw ("invalid input.");
-    }
     k = stoi(input_k);
-
-    if (Helpers :: is_valid_CalculatorName(input_calculator) == false) {
-        //        TODO: return an error to client
-        throw("invalid input.");
-    }
     calculator = input_calculator;
 }
 

@@ -18,6 +18,9 @@ public:
     void PrintFloat(float num);
     static bool is_valid_CalculatorName(string CalculatorName);
     static bool is_valid_k(string line);
+    string _convertToString(vector<string> words );
+    string _convertToStringFromFloat(vector<float> numbers );
+    bool IsKTooLarge(const std::string& file_path, int k);
 
 private:
     bool _allIsNumbers(string inputString);
