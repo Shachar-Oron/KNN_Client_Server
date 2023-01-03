@@ -42,7 +42,6 @@ int main(int argc, char** argv) {
             if (input_data == "-1") {
                 break;
             }
-            //TODO: transit everything into numbers, also the metrics
 
             char const *char_arr = input_data.data();
             // data_addr must be char*
@@ -67,7 +66,7 @@ int main(int argc, char** argv) {
             char buffer[4096];
             int expected_data_len = sizeof(buffer);
 
-            int read_bytes = recv(sock, buffer, expected_data_len, 0);
+            int read_bytes = recv(sock, buffer, 50, 0);
 
             if (read_bytes == 0) {
                 // connection is closed
