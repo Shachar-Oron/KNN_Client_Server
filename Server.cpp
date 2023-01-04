@@ -57,6 +57,7 @@ int main(int argc, char *argv[]) {
             while (true) {
                 char buffer[4096];
                 int expected_data_len = sizeof(buffer);
+                //       receive the data from the client into buffer
                 int read_bytes = recv(client_sock, buffer, expected_data_len, 0);
                 string result;
                 if (read_bytes == 0) {
@@ -67,6 +68,7 @@ int main(int argc, char *argv[]) {
                     // error
                     cout << ("error accepting client") << endl;
                 } else {
+                    //       split the data and run knn:
                     vector<string> splited = Helpers::SplitStringToStringVector(buffer);
 
                     vector<string> input_vec;
@@ -77,6 +79,8 @@ int main(int argc, char *argv[]) {
 
                     Knn obj = Knn(stringK, calc_input);
                     Helpers help;
+                    //       validate the input from the user (what we cannot check in client):
+
                     // make sure the vector is in the correct length
                     bool vaildVectorLength = help.InputValidation(
                             help._convertToStringFromFloat(data_set.getSampVec()[0].vec),
@@ -84,7 +88,7 @@ int main(int argc, char *argv[]) {
                     bool vaild_calc_metric = help.is_valid_CalculatorName(calc_input);
                     // make sure k is int
                     bool valid_k = help.is_valid_k(stringK);
-                    // make sure that k is'nt bigger than the number of lines in the file
+                    // make sure that k isn't bigger than the number of lines in the file
                     bool valid_k_length = help.IsKTooLarge(filePath, stoi(stringK));
 
                     if (!vaildVectorLength or !vaild_calc_metric or !valid_k or !valid_k_length) {
@@ -92,13 +96,12 @@ int main(int argc, char *argv[]) {
                     } else { // success
                         result = obj.RunKnn(data_set.getSampVec(), input_vec);
                     }
+                    //      send to the client the result
                     int sent_bytes = send(client_sock, result.c_str(), read_bytes, 0);
                     if (sent_bytes < 0) {
                         cout << ("error sending to client") << endl;
 
                     }
-
-
                 }
             }
         }
