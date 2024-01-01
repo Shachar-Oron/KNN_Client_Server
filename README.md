@@ -1,10 +1,10 @@
-# ap_ex3
+# KNN_Client_Server
 ## Description
-project of the third exercise in ap course, implementation of client and server functionallity.
+Project for the third exercise in the AP course, focusing on the implementation of client and server functionality for a KNN algorithm.
 
  ## About the project
 In this project we have implemented the previous exercises by adding them the server and the client functionallity. The client communicates with the server through the socket, with an IP adress and a port.
-the server is responsiball to run the KNN algorithm and send to the client the labels to the samples. The client is respomsible of getting the input from the user and send it to the server. In return' the server send the client the correct label for the input/
+the server is responsiball to run the KNN algorithm and send to the client the labels to the samples. The client is respomsible of getting the input from the user and send it to the server. In return, the server send the client the correct label for the input.
 The input the user is supposed to enter contains 3 arguments: "vector distance k".
 'k' - in the knn algorythem, k is the number of neighbors we would like to calculate the distences from. it shuld be a positive int value.
 'distance'- could be: AUC, MAN, CHB, CAN, MIN. Means the way the distance will be calulated.
